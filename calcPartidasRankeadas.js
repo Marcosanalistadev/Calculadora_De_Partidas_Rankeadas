@@ -26,37 +26,40 @@ Ao final deve se exibir uma mensagem:
  */
 
 
-let resultado = calcPartidasRankeadas(100 , 40 )
-var nivel = ""
 
-function calcPartidasRankeadas( qntVitorias , qntDerrotas ){
+const niveis = [
+    { limite: 10, nome: "Ferro" },
+    { limite: 20, nome: "Bronze" },
+    { limite: 50, nome: "Prata" },
+    { limite: 80, nome: "Ouro" },
+    { limite: 90, nome: "Diamante" },
+    { limite: 100, nome: "Lendário" },
+    { limite: Infinity, nome: "Imortal" }
+];
 
-    saldoVitorias = ( qntVitorias - qntDerrotas )
-    return saldoVitorias
-}    
-
-    if( saldoVitorias <= 10 ){
-        nivel = "Ferro"
-    
-    } else if ( saldoVitorias >= 11 && saldoVitorias <= 20){
-        nivel = "Bronze"
-    
-    } else if (saldoVitorias >= 21 && saldoVitorias <= 50){
-        nivel = "Prata"
-    
-    }else if (saldoVitorias >= 51 && saldoVitorias <= 80){
-        nivel = "Ouro"
-    
-    }else if (saldoVitorias >= 81 && saldoVitorias <= 90){
-        nivel = "Diamante"
-
-    }else if (saldoVitorias >=91 && saldoVitorias <= 100){
-        nivel = "Lendário"
-    
-    }else if (saldoVitorias >= 101){
-    nivel = "Imortal"
-   
+function calcularNivel(vitorias) {
+    for (const nivel of niveis) {
+        if (vitorias <= nivel.limite) {
+            return nivel.nome;
+        }
+    }
 }
 
-console.log(` O Herói tem de saldo de ${saldoVitorias} está no nível ${nivel}`)
+function calcPartidasRankeadas(vitorias, derrotas) {
+    if (
+        !Number.isInteger(vitorias) ||
+        !Number.isInteger(derrotas) ||
+        vitorias < 0 ||
+        derrotas < 0
+    ) {
+        return "Erro: informe valores inteiros não negativos.";
+    }
+
+    const saldo = vitorias - derrotas;
+    const nivel = calcularNivel(vitorias);
+
+    return `O Herói tem saldo de ${saldo} e está no nível ${nivel}`;
+}
+
+console.log(calcPartidasRankeadas(100, 40));
 
